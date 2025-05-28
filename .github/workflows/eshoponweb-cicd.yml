@@ -16,38 +16,33 @@ jobs:
     steps:
       - uses: actions/checkout@v4
 
+   buildandtest:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
       - name: Setup Node.js
         uses: actions/setup-node@v4
         with:
           node-version: '18'
 
       - name: Install Dependencies
-        run: npm ci # Better for CI; or use `npm install`
+        run: npm install
 
-      - name: Debug vite install
-        run: ls -l node_modules/.bin && ls -l node_modules/.bin/vite || echo "vite not found"
+      - name: Build React App (Vite)
+        run: npm run build
 
-      - name: Make vite executable (if needed)
-        run: chmod +x node_modules/.bin/vite
-
-      - name: Build React App
-        run: npx vite build
-
-
-      # Zip the build output
       - name: Zip Vite dist folder
         run: |
           cd dist
           zip -r ../app.zip .
 
-      # Upload build artifact
       - name: Upload artifact for deployment
         uses: actions/upload-artifact@v4
         with:
           name: react-app
           path: app.zip
 
-      # Upload Bicep template
       - name: Upload Bicep Template
         uses: actions/upload-artifact@v4
         with:
