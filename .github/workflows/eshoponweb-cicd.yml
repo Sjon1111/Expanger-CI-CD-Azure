@@ -1,4 +1,4 @@
-name: React App Build and Deploy CI/CD
+name: React App Build and Deploy CI/CD azure
 
 on: [push, workflow_dispatch]
 
