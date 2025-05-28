@@ -1,0 +1,49 @@
+.topbox {
+  h2 {
+    margin-bottom: 20px;
+  }
+
+  .list {
+
+    .listitem {
+
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      margin-bottom: 30px;
+
+      .company {
+        display: flex;
+        gap: 16px;
+
+        img {
+
+          height: 40px;
+          width: 40px;
+          border-radius: 50%;
+          object-fit: cover;
+        }
+
+        .companyTexts {
+          display: flex;
+          flex-direction: column;
+          gap: 5px;
+
+          .companyName {
+            font-size: 14px;
+            font-weight: 500px;
+          }
+
+          .companyemail {
+            font-size: 12px;
+          }
+        }
+
+        .amount {
+          font-weight: 500px;
+        }
+      }
+    }
+  }
+
+}

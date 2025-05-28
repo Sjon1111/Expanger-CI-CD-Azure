@@ -1,0 +1,11 @@
+.billingdata {
+  .datagrid {
+
+    background-color: white;
+    padding: 16px;
+
+    .MuiDataGrid-toolbarContainer {
+      flex-direction: row-reverse;
+    }
+  }
+}
