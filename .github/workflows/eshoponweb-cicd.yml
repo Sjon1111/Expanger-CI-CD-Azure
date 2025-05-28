@@ -10,12 +10,6 @@ env:
   WEBAPP-NAME: Expanger-azure-san
 
 jobs:
-  jobs:
-  buildandtest:
-    runs-on: ubuntu-latest
-    steps:
-      - uses: actions/checkout@v4
-
    buildandtest:
     runs-on: ubuntu-latest
     steps:
@@ -49,7 +43,7 @@ jobs:
           name: bicep-template
           path: ${{ env.TEMPLATE-FILE }}
 
-  deploy:
+   deploy:
     runs-on: ubuntu-latest
     needs: buildandtest
     environment:
