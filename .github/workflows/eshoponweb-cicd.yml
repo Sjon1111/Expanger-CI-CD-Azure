@@ -28,7 +28,7 @@ jobs:
 
       - name: Zip Vite dist folder
         run: |
-         cd dist
+          cd dist
           zip -r ../app.zip .
 
 
