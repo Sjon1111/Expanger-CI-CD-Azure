@@ -28,8 +28,9 @@ jobs:
 
       - name: Zip Vite dist folder
         run: |
-          cd dist
+         cd dist
           zip -r ../app.zip .
+
 
       - name: Upload artifact for deployment
         uses: actions/upload-artifact@v4
