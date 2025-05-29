@@ -21,7 +21,8 @@ resource appService 'Microsoft.Web/sites@2022-09-01' = {
   properties: {
     serverFarmId: appServicePlan.id
     siteConfig: {
-      linuxFxVersion: 'DOTNETCORE|8.0'
+      linuxFxVersion: 'NODE|18-lts'
+
       appSettings: [
         {
           name: 'ASPNETCORE_ENVIRONMENT'
