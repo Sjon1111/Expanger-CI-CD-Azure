@@ -1,36 +1,38 @@
-param webAppName string = uniqueString(resourceGroup().id)
-param sku string = 'B1'
+param webAppName string
 param location string = resourceGroup().location
+param sku string = 'B1'
 
-var appServicePlanName = toLower('AppServicePlan-${webAppName}')
+var appServicePlanName = 'asp-${webAppName}'
 
 resource appServicePlan 'Microsoft.Web/serverfarms@2022-09-01' = {
   name: appServicePlanName
   location: location
-  properties: {
-    reserved: true // Required for Linux
-  }
   sku: {
     name: sku
+    tier: 'Basic'
+  }
+  kind: 'linux'
+  properties: {
+    reserved: true  // Required for Linux
   }
 }
 
-resource appService 'Microsoft.Web/sites@2022-09-01' = {
+resource webApp 'Microsoft.Web/sites@2022-09-01' = {
   name: webAppName
-  kind: 'app,linux'
   location: location
+  kind: 'app,linux'
   properties: {
     serverFarmId: appServicePlan.id
     siteConfig: {
       linuxFxVersion: 'NODE|18-lts'
       appSettings: [
         {
-          name: 'WEBSITE_NODE_DEFAULT_VERSION'
-          value: '18'
+          name: 'WEBSITES_ENABLE_APP_SERVICE_STORAGE'
+          value: 'true'
         }
         {
-          name: 'WEBSITE_RUN_FROM_PACKAGE'
-          value: '1'
+          name: 'WEBSITES_PORT'
+          value: '3000' // Optional: useful for SSR, not needed for pure static
         }
       ]
     }
