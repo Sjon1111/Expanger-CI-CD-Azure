@@ -1,38 +1,36 @@
-param webAppName string
+param webAppName string = uniqueString(resourceGroup().id) // Generate unique String for web app name
+param sku string = 'B1' // The SKU of App Service Plan
 param location string = resourceGroup().location
-param sku string = 'B1'
 
-var appServicePlanName = 'asp-${webAppName}'
+var appServicePlanName = toLower('AppServicePlan-${webAppName}')
 
 resource appServicePlan 'Microsoft.Web/serverfarms@2022-09-01' = {
   name: appServicePlanName
   location: location
+  properties: {
+    reserved: true // 👈 Linux-based plan
+  }
   sku: {
     name: sku
-    tier: 'Basic'
-  }
-  kind: 'linux'
-  properties: {
-    reserved: true  // Required for Linux
   }
 }
 
-resource webApp 'Microsoft.Web/sites@2022-09-01' = {
+resource appService 'Microsoft.Web/sites@2022-09-01' = {
   name: webAppName
   location: location
   kind: 'app,linux'
   properties: {
     serverFarmId: appServicePlan.id
     siteConfig: {
-      linuxFxVersion: 'NODE|18-lts'
+      linuxFxVersion: 'NODE|18-lts' // 👈 Node.js runtime, required for Vite build
       appSettings: [
         {
-          name: 'WEBSITES_ENABLE_APP_SERVICE_STORAGE'
-          value: 'true'
+          name: 'WEBSITE_RUN_FROM_PACKAGE'
+          value: '1' // 👈 Run your deployed ZIP package
         }
         {
-          name: 'WEBSITES_PORT'
-          value: '3000' // Optional: useful for SSR, not needed for pure static
+          name: 'ASPNETCORE_ENVIRONMENT'
+          value: 'Development'
         }
       ]
     }
