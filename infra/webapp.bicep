@@ -28,10 +28,7 @@ resource appService 'Microsoft.Web/sites@2022-09-01' = {
           name: 'WEBSITE_RUN_FROM_PACKAGE'
           value: '1' // 👈 Run your deployed ZIP package
         }
-        {
-          name: 'ASPNETCORE_ENVIRONMENT'
-          value: 'Development'
-        }
+      
       ]
     }
   }
